@@ -129,7 +129,7 @@ type MetaFSpec = FSpec
 
 
 
--- ^ Write the meta-information of an FSpec to a file. This is usefull for debugging.
+-- ^ Write the meta-information of an FSpec to a file. This is useful for debugging.
 --   The comments that are in Pop are preserved. 
 makeMetaFile :: FSpec -> FSpec -> (FilePath,String)
 makeMetaFile formalAmpersand userFspec

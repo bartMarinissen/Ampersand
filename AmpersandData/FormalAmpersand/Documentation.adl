@@ -3,12 +3,28 @@ PURPOSE PATTERN Documentation
 {+
 +}
 PATTERN Documentation
-    REPRESENT ConceptDefinition TYPE BIGALPHANUMERIC
+    REPRESENT Meaning TYPE BIGALPHANUMERIC
 
     REPRESENT MarkupText TYPE BIGALPHANUMERIC    
+    RELATION cdcpt[ConceptDef*Concept] 
+    MEANING "The concept of a conceptDef."
+    RELATION cddef[ConceptDef*Meaning] 
+    MEANING "The meanings of a concept."
+    RELATION cdref[ConceptDef*Reference] 
+    MEANING "The reference of a concept."
+    RELATION cdfrom[ConceptDef*Pattern] 
+    MEANING "The pattern in which a concept definition resides."
+RELATION meaning[Concept*Meaning] 
+MEANING "The meanings of a concept."
+ROLE ExecEngine MAINTAINS "concept meaning"
+RULE "concept meaning Ins" : cdcpt~;cddef |- meaning
+VIOLATION ( TXT "{EX}InsPair;meaning;Concept;", SRC I, TXT";Meaning;", SRC I )
+RULE "concept meaning Del" : meaning |- cdcpt~;cddef
+VIOLATION ( TXT "{EX}DelPair;meaning;Concept;", SRC I, TXT";Meaning;", SRC I )
+
     RELATION meaning[Rule*Meaning] -- e.g. 'bfOUprop[BusinessFunction] is antisymmetric'
     MEANING "The meanings of a relation."
-    RELATION decmean[Relation * Meaning]
+    RELATION decMean[Relation*Meaning]
     MEANING "The meanings of a relation."
     RELATION purpose[Pattern*Purpose]
     MEANING "The purposes of a pattern."

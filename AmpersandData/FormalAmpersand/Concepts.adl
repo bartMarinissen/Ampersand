@@ -40,7 +40,6 @@ PATTERN Specialization
 --RELATION instanceOf[Atom*Concept] [TOT] 
 --RULE specialization : instanceOf;genspc~;gengen |- instanceOf
 --MEANING "Every instance of a specialized concept is an instance of the generic concept too."
-
 ENDPATTERN
 
 PROCESS "Compute Closures"

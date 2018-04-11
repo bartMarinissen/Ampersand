@@ -176,8 +176,11 @@ transformers fSpec = map toTransformer [
         , Just(prop,_) <- [rrdcl rul]
         ]
       )
-     ,("decmean"               , "Relation"              , "Meaning" 
-      , []  --TODO
+     ,("decMean"               , "Relation"              , "Meaning" 
+      , [(dirtyId rel, (PopAlphaNumeric . aMarkup2String Markdown) meaningString)
+        | rel::Relation <- instances fSpec
+        , meaningString <- (ameaMrk.decMean) rel
+        ]
       )
      ,("decprL"                , "Relation"              , "String"  
       , [(dirtyId rel, (PopAlphaNumeric . decprL) rel) 
@@ -194,6 +197,24 @@ transformers fSpec = map toTransformer [
         | rel::Relation <- instances fSpec
         ]
       )
+     ,("cdcpt"                , "ConceptDef"              , "Concept"  
+      , [(dirtyId cd, (PopAlphaNumeric . cdcpt) cd)
+        | cd::ConceptDef <- instances fSpec
+        ]
+      )
+     ,("cddef"                , "ConceptDef"              , "Meaning"  
+      , [(dirtyId cd, (PopAlphaNumeric . cddef) cd)
+        | cd::ConceptDef <- instances fSpec
+        ]
+      )
+     ,("cdref"                , "ConceptDef"              , "Reference"  
+      , [(dirtyId cd, (PopAlphaNumeric . cdref) cd)
+        | cd::ConceptDef <- instances fSpec
+        ]
+      )
+     ,("cdfrom"               , "ConceptDef"              , "Pattern"  
+      , []  --TODO
+     )
      ,("default"               , "View"                  , "Concept" 
       , []  --TODO
       )
@@ -735,6 +756,8 @@ instance Instances A_Gen where
   instances fSpec = gens (originalContext fSpec)
 instance Instances A_Concept where
   instances fSpec = Set.elems . concs . originalContext $ fSpec
+instance Instances ConceptDef where
+  instances fSpec = conceptDefs fSpec
 instance Instances Conjunct where
   instances fSpec = allConjuncts fSpec
 instance Instances Relation where
